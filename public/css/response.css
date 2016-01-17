@@ -1,0 +1,15 @@
+html {
+    background-color:#BBB;
+    font-family: Poiret One;
+    color: #22A;
+    font-size: 25px;
+}
+
+p {
+    margin-top: 50px;
+}
+
+#date {    
+    color: #000;
+    font-size: 50px;
+}

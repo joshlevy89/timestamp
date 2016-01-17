@@ -1,10 +1,20 @@
 var express = require('express');
+var path = require('path');
 var app = express();
 var moment = require('moment');
+var fs = require('fs');
 
-app.get('/', function(req,res){
-   res.send('PLEASE ENTER A DATE');
-});
+// create the home page
+fs.unlink(path.join(__dirname,'/public/css/main.css'),function(err) { // delete existing main.css file 
+   if (err) {} // if no file, do nothing
+});  
+app.use('/',require('stylus').middleware(path.join(__dirname,'/public/css')));
+app.use('/',express.static(path.join(__dirname,'/public')));
+
+// render any generated content
+app.set('view engine', 'jade')
+app.set('views', path.join(__dirname, '/public'));
+
 
 app.get('/:query', function(req,res){
    var query = req.params.query;
@@ -13,7 +23,8 @@ app.get('/:query', function(req,res){
    var o = {unix: unix,
             natural: natural
    };
-   res.json(o);
+   res.render('response',{date:JSON.stringify(o)});
+  // res.json(o);
   });
 
 app.listen(process.env.PORT);
